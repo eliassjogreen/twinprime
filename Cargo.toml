@@ -1,0 +1,18 @@
+[package]
+name = "twinprime"
+version = "0.1.0"
+authors = ["eliassjogreen <eliassjogreen1@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+deno_core = "0.66.0"
+serde = { version = "1.0" }
+primal = "0.3.0"
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+lto = true
