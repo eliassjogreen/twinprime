@@ -13,7 +13,10 @@ pub fn deno_plugin_init(interface: &mut dyn Interface) {
   interface.register_op("op_check", op_check);
 }
 
-fn op_check(_interface: &mut dyn Interface, zero_copy: &mut [ZeroCopyBuf]) -> Op {
+fn op_check(
+  _interface: &mut dyn Interface,
+  zero_copy: &mut [ZeroCopyBuf],
+) -> Op {
   let start = u64::from_ne_bytes(zero_copy[0][..].try_into().unwrap());
   let stop = u64::from_ne_bytes(zero_copy[1][..].try_into().unwrap());
   let mut twins = Vec::new();
@@ -43,7 +46,7 @@ fn next(from: u64, lim: u64) -> Option<u64> {
       return Some(i - 1);
     }
 
-    i = i + 6;
+    i += 6;
   }
 
   None
