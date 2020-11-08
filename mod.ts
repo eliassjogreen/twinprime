@@ -10,13 +10,13 @@ await Plug.prepare({
 /**
  * Generates all twin primes between `start` and `stop`
  */
-export function generate(start: bigint, stop: bigint): string {
+export function generate(start: bigint, stop: bigint): bigint[] {
   const response = Plug.core.dispatch(
     Plug.getOpId("op_generate"),
     u64(start),
     u64(stop),
   );
-  return decoder.decode(response);
+  return JSON.parse(decoder.decode(response));
 }
 
 function endian(): boolean {
