@@ -4,7 +4,7 @@ const decoder = new TextDecoder();
 
 await Plug.prepare({
   name: "twinprime",
-  url: "https://github.com/webview/webview_deno/releases/download/0.1.0/",
+  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.0/",
 });
 
 /**
