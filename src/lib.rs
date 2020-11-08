@@ -10,10 +10,10 @@ use primal::is_prime;
 
 #[no_mangle]
 pub fn deno_plugin_init(interface: &mut dyn Interface) {
-  interface.register_op("op_check", op_check);
+  interface.register_op("op_generate", op_generate);
 }
 
-fn op_check(
+fn op_generate(
   _interface: &mut dyn Interface,
   zero_copy: &mut [ZeroCopyBuf],
 ) -> Op {

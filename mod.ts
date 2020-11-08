@@ -4,15 +4,18 @@ const decoder = new TextDecoder();
 
 await Plug.prepare({
   name: "twinprime",
-  url: "https://github.com/eliassjogreen/twinprime/releases/latest/download/"
+  url: "https://github.com/webview/webview_deno/releases/download/0.1.0/",
 });
 
 /**
  * Generates all twin primes between `start` and `stop`
  */
-export function check(start: bigint, stop: bigint): string {
-  const opId = Plug.getOpId("op_check");
-  const response = Plug.core.dispatch(opId, u64(start), u64(stop));
+export function generate(start: bigint, stop: bigint): string {
+  const response = Plug.core.dispatch(
+    Plug.getOpId("op_generate"),
+    u64(start),
+    u64(stop),
+  );
   return decoder.decode(response);
 }
 
@@ -29,7 +32,11 @@ function u64(n: bigint): Uint8Array {
 
   const arr = new Uint8Array(8);
 
-  for (let i = 0, m = 0x00000000000000ffn, s = 0n; i < arr.length; i++, m <<= 8n, s += 8n) {
+  for (
+    let i = 0, m = 0x00000000000000ffn, s = 0n;
+    i < arr.length;
+    i++, m <<= 8n, s += 8n
+  ) {
     arr[i] = Number((n & m) >> s);
   }
 
