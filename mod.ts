@@ -4,19 +4,27 @@ const decoder = new TextDecoder();
 
 await Plug.prepare({
   name: "twinprime",
-  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.0/",
+  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.2/",
 });
 
 /**
- * Generates all twin primes between `start` and `stop`
+ * Generates all twin primes between `start` and `stop` and returns a json array
  */
-export function generate(start: bigint, stop: bigint): bigint[] {
+export function generateRaw(start: bigint, stop: bigint): string {
   const response = Plug.core.dispatch(
     Plug.getOpId("op_generate"),
     u64(start),
     u64(stop),
   );
-  return JSON.parse(decoder.decode(response));
+
+  return decoder.decode(response);
+}
+
+/**
+ * Generates all twin primes between `start` and `stop`
+ */
+export function generate(start: bigint, stop: bigint): bigint[] {
+  return generateRaw(start, stop).slice(1, -1).split(",").map((v) => BigInt(v));
 }
 
 function endian(): boolean {
