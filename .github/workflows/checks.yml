@@ -1,0 +1,46 @@
+name: checks
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Cargo.toml"
+      - "src/**"
+      - ".github/workflows/**"
+      - "**.ts"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v2
+
+      - name: setup deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.x
+
+      - name: run formatting
+        run: deno fmt --check
+
+      - name: run linting
+        run: deno lint --unstable
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v2
+
+      - name: setup deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.x
+
+      - name: run test
+        run: deno test -A --unstable
+
+      - name: run benchmark
+        run: deno run -A --unstable ./bench.ts
