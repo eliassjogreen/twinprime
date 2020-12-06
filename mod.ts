@@ -1,10 +1,10 @@
-import { Plug } from "https://deno.land/x/plug@0.2.4/mod.ts";
+import { Plug } from "https://deno.land/x/plug@0.2.6/mod.ts";
 
 const decoder = new TextDecoder();
 
 await Plug.prepare({
   name: "twinprime",
-  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.2/",
+  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.3/",
 });
 
 /**
