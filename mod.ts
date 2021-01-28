@@ -1,4 +1,4 @@
-import { Plug } from "https://deno.land/x/plug@0.2.8/mod.ts";
+import { Plug } from "https://deno.land/x/plug@0.2.9/mod.ts";
 
 const endian = new Uint8Array(new Uint16Array([0x1234]).buffer)[0] === 0x34;
 
