@@ -4,8 +4,7 @@ const endian = new Uint8Array(new Uint16Array([0x1234]).buffer)[0] === 0x34;
 
 await Plug.prepare({
   name: "twinprime",
-  url: "./target/release/",
-  policy: Plug.CachePolicy.NONE,
+  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.4/",
 });
 
 /**
