@@ -1,8 +1,11 @@
 import { Plug } from "https://deno.land/x/plug@0.2.8/mod.ts";
 
+const endian = new Uint8Array(new Uint16Array([0x1234]).buffer)[0] === 0x34;
+
 await Plug.prepare({
   name: "twinprime",
-  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.4/",
+  url: "./target/release/",
+  policy: Plug.CachePolicy.NONE,
 });
 
 /**
@@ -20,12 +23,6 @@ export function range(start: bigint, stop: bigint) {
   }
 }
 
-function endian(): boolean {
-  const buffer = new ArrayBuffer(2);
-  new DataView(buffer).setInt16(0, 256, true);
-  return new Int16Array(buffer)[0] === 256;
-}
-
 function u64(n: bigint): Uint8Array {
   if (n < 0n || n > 0xffffffffffffffffn) {
     throw new RangeError("Number must be between 0 and 0xffffffffffffffff");
@@ -41,5 +38,5 @@ function u64(n: bigint): Uint8Array {
     arr[i] = Number((n & m) >> s);
   }
 
-  return endian() ? arr : arr.reverse();
+  return endian ? arr : arr.reverse();
 }

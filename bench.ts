@@ -6,7 +6,7 @@ import { range as ref } from "./ref.ts";
 let rust1e6, ref1e6, rustlarge, reflarge;
 
 bench({
-  name: "rust | 0..1e6",
+  name: "rust easy",
   func: (t) => {
     t.start();
     rust1e6 = rust(0n, 1000000n);
@@ -15,7 +15,7 @@ bench({
 });
 
 bench({
-  name: "ref | 0..1e6",
+  name: "ref easy",
   func: (t) => {
     t.start();
     ref1e6 = ref(0, 1000000);
@@ -24,7 +24,7 @@ bench({
 });
 
 bench({
-  name: "rust | 3575225575224..3575226575224",
+  name: "rust real",
   func: (t) => {
     t.start();
     rustlarge = rust(3575225575224n, 3575226575224n);
@@ -33,7 +33,7 @@ bench({
 });
 
 bench({
-  name: "ref | 3575225575224..3575226575224",
+  name: "ref real",
   func: (t) => {
     t.start();
     reflarge = ref(3575225575224, 3575226575224);

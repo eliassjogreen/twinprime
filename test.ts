@@ -33,28 +33,28 @@ const first = new BigUint64Array([
 ]);
 
 Deno.test({
-  name: "rust == 1000..2000",
+  name: "rust first",
   fn(): void {
     assertEquals(rust(1000n, 2000n), first);
   },
 });
 
 Deno.test({
-  name: "ref == 1000..2000",
+  name: "ref first",
   fn(): void {
     assertEquals(ref(1000, 2000), first);
   },
 });
 
 Deno.test({
-  name: "ref == rust | 0..1e6",
+  name: "ref easy == rust easy",
   fn(): void {
     assertEquals(rust(0n, 1000000n), ref(0, 1000000));
   },
 });
 
 Deno.test({
-  name: "ref == rust | 3575225575224..3575226575224",
+  name: "ref real == rust real",
   fn(): void {
     assertEquals(
       rust(3575225575224n, 3575226575224n),
