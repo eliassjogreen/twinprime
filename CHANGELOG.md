@@ -2,8 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog], and this project adheres to
-[Semantic Versioning].
+The format is based on [Keep a Changelog],
+and this project adheres to [Semantic Versioning].
+
+## [0.1.5] - 2021-01-28
+
+## [0.1.4] - 2021-01-28
+
+## [0.1.3] - 2020-12-06
+
+### Bug Fixes
+
+- disable gh action tests ([`7dce8d5`])
 
 ## [0.1.2] - 2020-11-09
 
@@ -29,6 +39,10 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
+[0.1.5]: https://github.com/eliassjogreen/twinprime/compare/0.1.4...0.1.5
+[0.1.4]: https://github.com/eliassjogreen/twinprime/compare/0.1.3...0.1.4
+[0.1.3]: https://github.com/eliassjogreen/twinprime/compare/0.1.2...0.1.3
+[`7dce8d5`]: https://github.com/eliassjogreen/twinprime/commit/7dce8d54b74a400570cf8a2a7f569ecdf68a1373
 [0.1.2]: https://github.com/eliassjogreen/twinprime/compare/0.1.1...0.1.2
 [`4942ab3`]: https://github.com/eliassjogreen/twinprime/commit/4942ab3105dd96382cfcd3de11236f567767470a
 [`e664add`]: https://github.com/eliassjogreen/twinprime/commit/e664addb78544a0ae763e46ff497b175a0f0603b
