@@ -25,11 +25,11 @@ jobs:
       - name: clone repo
         uses: actions/checkout@v2
 
-      - name: install stable rust toolchain
+      - name: install nightly rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly
           override: true
 
       - name: log versions

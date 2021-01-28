@@ -1,13 +1,15 @@
-import { bench, runBenchmarks } from "./deps.ts";
+import { assertEquals, bench, runBenchmarks } from "./deps.ts";
 
-import { generate as rust } from "./mod.ts";
-import { generate as ref } from "./ref.ts";
+import { range as rust } from "./mod.ts";
+import { range as ref } from "./ref.ts";
+
+let rust1e6, ref1e6, rustlarge, reflarge;
 
 bench({
   name: "rust | 0..1e6",
   func: (t) => {
     t.start();
-    rust(0n, 1000000n);
+    rust1e6 = rust(0n, 1000000n);
     t.stop();
   },
 });
@@ -16,7 +18,7 @@ bench({
   name: "ref | 0..1e6",
   func: (t) => {
     t.start();
-    ref(0, 1000000);
+    ref1e6 = ref(0, 1000000);
     t.stop();
   },
 });
@@ -25,7 +27,7 @@ bench({
   name: "rust | 3575225575224..3575226575224",
   func: (t) => {
     t.start();
-    rust(3575225575224n, 3575226575224n);
+    rustlarge = rust(3575225575224n, 3575226575224n);
     t.stop();
   },
 });
@@ -34,9 +36,12 @@ bench({
   name: "ref | 3575225575224..3575226575224",
   func: (t) => {
     t.start();
-    ref(3575225575224, 3575226575224);
+    reflarge = ref(3575225575224, 3575226575224);
     t.stop();
   },
 });
 
-runBenchmarks();
+await runBenchmarks();
+
+assertEquals(rust1e6, ref1e6);
+assertEquals(rustlarge, reflarge);

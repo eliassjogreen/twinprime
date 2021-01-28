@@ -23,10 +23,10 @@ function prime(n: number): number {
   return 1;
 }
 
-export function generate(
+export function range(
   start: number,
   stop: number,
-): bigint[] {
+): BigUint64Array {
   const twins = [];
   let last = start;
 
@@ -40,5 +40,5 @@ export function generate(
     }
   }
 
-  return twins.map((v) => BigInt(v));
+  return new BigUint64Array(twins.map((v) => BigInt(v)));
 }

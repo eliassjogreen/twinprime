@@ -1,30 +1,23 @@
-import { Plug } from "https://deno.land/x/plug@0.2.6/mod.ts";
-
-const decoder = new TextDecoder();
+import { Plug } from "https://deno.land/x/plug@0.2.8/mod.ts";
 
 await Plug.prepare({
   name: "twinprime",
-  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.3/",
+  url: "https://github.com/eliassjogreen/twinprime/releases/download/0.1.4/",
 });
-
-/**
- * Generates all twin primes between `start` and `stop` and returns a json array
- */
-export function generateRaw(start: bigint, stop: bigint): string {
-  const response = Plug.core.dispatch(
-    Plug.getOpId("op_generate"),
-    u64(start),
-    u64(stop),
-  );
-
-  return decoder.decode(response);
-}
 
 /**
  * Generates all twin primes between `start` and `stop`
  */
-export function generate(start: bigint, stop: bigint): bigint[] {
-  return generateRaw(start, stop).slice(1, -1).split(",").map((v) => BigInt(v));
+export function range(start: bigint, stop: bigint) {
+  const response = Plug.core.dispatch(
+    Plug.getOpId("op_range"),
+    u64(start),
+    u64(stop),
+  );
+
+  if (response !== undefined) {
+    return new BigUint64Array(response.buffer);
+  }
 }
 
 function endian(): boolean {

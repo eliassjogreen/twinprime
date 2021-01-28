@@ -3,46 +3,51 @@ use std::convert::TryInto;
 use deno_core::plugin_api::Interface;
 use deno_core::plugin_api::Op;
 use deno_core::plugin_api::ZeroCopyBuf;
-use deno_core::serde_json::json;
-use deno_core::serde_json::to_vec;
 
-use primal::is_prime;
+use is_prime_for_primitive_int::is_prime_u64;
 
 #[no_mangle]
 pub fn deno_plugin_init(interface: &mut dyn Interface) {
-  interface.register_op("op_generate", op_generate);
+  interface.register_op("op_range", op_range);
 }
 
-fn op_generate(
+fn op_range(
   _interface: &mut dyn Interface,
   zero_copy: &mut [ZeroCopyBuf],
 ) -> Op {
-  let start = u64::from_ne_bytes(zero_copy[0][..].try_into().unwrap());
-  let stop = u64::from_ne_bytes(zero_copy[1][..].try_into().unwrap());
+  let start = u64::from_ne_bytes(
+    zero_copy[0][..]
+      .try_into()
+      .expect("Slice has incorrect length"),
+  );
+  let stop = u64::from_ne_bytes(
+    zero_copy[1][..]
+      .try_into()
+      .expect("Slice has incorrect length"),
+  );
   let mut twins = Vec::new();
-  let mut last = start;
+  let mut prev = start;
 
-  while last <= stop {
-    if let Some(curr) = next(last, stop) {
-      last = curr;
+  while prev <= stop {
+    if let Some(curr) = next(prev, stop) {
       twins.push(curr);
+      prev = curr;
     } else {
       break;
     }
   }
 
-  Op::Sync(to_vec(&json!(twins)).unwrap().into_boxed_slice())
+  let slice = as_u8_slice(twins.as_slice());
+  let boxed = slice.to_owned().into_boxed_slice();
+
+  Op::Sync(boxed)
 }
 
 fn next(from: u64, lim: u64) -> Option<u64> {
-  let mut i = if from % 6 == 0 {
-    from + 6
-  } else {
-    (6 - from % 6) + from + 6
-  };
+  let mut i = if from % 6 == 0 { 0 } else { 6 - from % 6 } + from + 6;
 
-  while i < lim {
-    if is_prime(i - 1) && is_prime(i + 1) {
+  while i <= lim {
+    if is_prime_u64(i - 1) && is_prime_u64(i + 1) {
       return Some(i - 1);
     }
 
@@ -50,4 +55,13 @@ fn next(from: u64, lim: u64) -> Option<u64> {
   }
 
   None
+}
+
+fn as_u8_slice<T>(s: &[T]) -> &[u8] {
+  unsafe {
+    std::slice::from_raw_parts(
+      s.as_ptr() as *const u8,
+      s.len() * std::mem::size_of::<T>(),
+    )
+  }
 }

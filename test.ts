@@ -1,9 +1,9 @@
 import { assertEquals } from "./deps.ts";
 
-import { generate as rust } from "./mod.ts";
-import { generate as ref } from "./ref.ts";
+import { range as rust } from "./mod.ts";
+import { range as ref } from "./ref.ts";
 
-const first = [
+const first = new BigUint64Array([
   1019n,
   1031n,
   1049n,
@@ -30,7 +30,7 @@ const first = [
   1931n,
   1949n,
   1997n,
-];
+]);
 
 Deno.test({
   name: "rust == 1000..2000",
